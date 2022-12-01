@@ -246,8 +246,10 @@ async function openHH(vacancy) {
     vacancy
   );
 
-  await pagePuppeteer.close();
-  await browser.close();
+  try {
+    await pagePuppeteer.close();
+    await browser.close();
+  } catch {}
 }
 
 module.exports = openHH;
