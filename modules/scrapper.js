@@ -148,7 +148,7 @@ async function openHH(vacancy) {
   } else {
     //move to the second page to get url from second page to make urls for next search pages in future (only on this page we get url with query params of page number)
     pagePuppeteer.click(
-      "#HH-React-Root > div > div.HH-MainContent.HH-Supernova-MainContent > div.main-content > div > div:nth-child(3) > div.sticky-sidebar-and-content--NmOyAQ7IxIOkgRiBRSEg > div.bloko-column.bloko-column_xs-4.bloko-column_s-8.bloko-column_m-9.bloko-column_l-13 > div > div.bloko-gap.bloko-gap_top > div > span:nth-child(2) > a"
+      "#HH-React-Root > div > div.HH-MainContent.HH-Supernova-MainContent > div.main-content > div > div:nth-child(2) > div.sticky-sidebar-and-content--NmOyAQ7IxIOkgRiBRSEg > div.bloko-column.bloko-column_xs-4.bloko-column_s-8.bloko-column_m-9.bloko-column_l-13 > main > div.bloko-gap.bloko-gap_top > div > span:nth-child(2) > a"
     );
     await new Promise((resolve) => setTimeout(resolve, loadingDelay));
     const pageUrl = await pagePuppeteer.url();
