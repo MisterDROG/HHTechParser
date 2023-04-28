@@ -12,6 +12,7 @@ Technologies:
 - Node.js
 - Puppeteer
 - Exeljs
+- Pkg
 
 Project development:
 

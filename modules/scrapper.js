@@ -1,20 +1,13 @@
 const puppeteer = require("puppeteer");
-const url = require("url");
-const addToExel = require("./addToExel");
-const input = require("./input");
+const addToExel = require("./exportToExel");
+const input = require("./inputFunctions");
 
 const path = require("path");
 const os = require("os");
 const tmpPath = os.tmpdir();
 const chromePath = path.join(tmpPath, ".local-chromium");
 
-// import { join } from "path";
-// import { tmpdir } from "os";
-// const tmpPath = tmpdir();
-// const chromePath = join(tmpPath, ".local-chromium");
-
-const searchingPage =
-  "https://hh.ru/search/vacancy?search_field=name&search_field=company_name&search_field=description&text=";
+const searchingPage = "https://hh.ru/search/vacancy?search_field=name&search_field=company_name&search_field=description&text=";
 const loadingDelay = 2000;
 const regExp = /[A-Z]+[0-9]*[\-\s\.\+\#]?[A-Z0-9]*/gi;
 
@@ -68,7 +61,7 @@ async function openHH(vacancy) {
   const revisionInfo = await browserFetcher.download("1056772");
 
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     executablePath: revisionInfo.executablePath,
   });
   console.log(
@@ -117,7 +110,7 @@ async function openHH(vacancy) {
 
   //getting number of vacancies from search result
   const numberOfVacaтcies = await pagePuppeteer.$eval(
-    "#HH-React-Root > div > div.HH-MainContent.HH-Supernova-MainContent > div.main-content > div > div.bloko-column.bloko-column_xs-0.bloko-column_s-8.bloko-column_m-12.bloko-column_l-16 > div > h1",
+    "#HH-React-Root > div > div.HH-MainContent.HH-Supernova-MainContent > div.main-content > div > div.bloko-column.bloko-column_container.bloko-column_xs-4.bloko-column_s-8.bloko-column_m-12.bloko-column_l-16 > div > div > h1",
     (el) => el.innerText
   );
   console.log("\nAmount of vacancies found: ", numberOfVacaтcies);
