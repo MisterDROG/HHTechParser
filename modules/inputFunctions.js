@@ -46,7 +46,7 @@ async function inputEnd() {
   const rl = createInputInterface()
 
   let answer = await new Promise((resolve, reject) => {
-    rl.question(` - Press Enter to close the app...`, (answer) => {
+    rl.question(` - Now you can close this app. Thank you!`, (answer) => {
       resolve(answer);
     });
   });

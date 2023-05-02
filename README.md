@@ -10,13 +10,14 @@ The application has a built .exe file that can be run on any computer. Thus, the
 Technologies:
 
 - Node.js
-- Puppeteer
-- Exeljs
-- Pkg
+- Puppeteer - as parsing library
+- Exeljs - for export results to Excel
+- Pkg - for creating .exe file for using without IDE
+($ pkg main.js -t node14-win-x64 --public -> command to create .exe for win64)
 
 Project development:
 
-- The main module of the scraper application was written in the Hackathon mode in 6 hours, so it requires careful refactoring into submodules.
+- The main module of the scraper application was written in the Hackathon mode in 12 hours, so it requires careful refactoring into submodules.
 - Writing the server part and frontend for the further work of the project on the Internet.
 
 Idea and realization by Igor Drogaytsev. Link to the video presentation:

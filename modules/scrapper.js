@@ -1,14 +1,20 @@
 const puppeteer = require("puppeteer");
-const addToExel = require("./exportToExel");
+const eportToExel = require("./exportToExel");
 const input = require("./inputFunctions");
 
+//detecting path on the computer to download chromium engine for puppeteer
 const path = require("path");
 const os = require("os");
 const tmpPath = os.tmpdir();
 const chromePath = path.join(tmpPath, ".local-chromium");
 
+//headlessMode for puppeteer to determine mode of showing browser while parsing or not (false for test mode)
+const headlessMode = true
+//link to the searching page of the target website
 const searchingPage = "https://hh.ru/search/vacancy?search_field=name&search_field=company_name&search_field=description&text=";
+//delay for waiting page to be load
 const loadingDelay = 2000;
+// regular expression for identifying technology name in the parsed text
 const regExp = /[A-Z]+[0-9]*[\-\s\.\+\#]?[A-Z0-9]*/gi;
 
 //function for getting list with urls of searched vacancies
@@ -55,13 +61,16 @@ async function openHH(vacancy) {
   console.log(
     "If it is your first usage, it will take ~ 60 sec to download chromium engine. Next time it won't happen."
   );
+
+  //downloading fetching chrome module if needed
   const browserFetcher = await puppeteer.createBrowserFetcher({
     path: chromePath,
   });
   const revisionInfo = await browserFetcher.download("1056772");
 
+  //launch puppeteer library
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: headlessMode,
     executablePath: revisionInfo.executablePath,
   });
   console.log(
@@ -72,6 +81,7 @@ async function openHH(vacancy) {
 
   const searchingVacancy = vacancy;
 
+  //open new page in browser
   const pagePuppeteer = await browser.newPage();
 
   // open webpage with vacancies search for scrapping
@@ -97,7 +107,6 @@ async function openHH(vacancy) {
   await new Promise((resolve) => setTimeout(resolve, loadingDelay));
 
   //input searching vacanicy
-
   await pagePuppeteer.type("#a11y-search-input", searchingVacancy);
   await new Promise((resolve) => setTimeout(resolve, loadingDelay));
 
@@ -137,10 +146,13 @@ async function openHH(vacancy) {
   });
   console.log("Amount of pages with results: ", amountOfPages);
 
+  //ask user in console how many vacancies he wants to scrap
   const amountOfVacToScrap = await input.inputAmountOfVac(
     numberOfVacaтcies.match(/[0-9]+/)
   );
 
+
+  //start to collect urls of vacancies
   let vacUrlsAll = [];
   console.log("\nStart searching vacancy links...");
   if (amountOfPages == 1) {
@@ -232,17 +244,19 @@ async function openHH(vacancy) {
     amountOfErrorsInVac,
     "vacancies was no data."
   );
-  await addToExel(
+
+  //export results to Excel
+  await eportToExel(
     objectSorting(totalTechs),
     searchingVacancy,
     amountOfVacToScrap,
     vacancy
   );
 
-  try {
-    await pagePuppeteer.close();
-    await browser.close();
-  } catch {}
+  // try {
+  //   await pagePuppeteer.close();
+  //   await browser.close();
+  // } catch {}
 }
 
 module.exports = openHH;
