@@ -7,12 +7,12 @@ Right now application doesn't work with the English version of website.
 
 The application has a built .exe file that can be run on any computer. Thus, the project was tested on real users.
 
-Technologies:
+Technologies used:
 
 - Node.js
 - Puppeteer - as parsing library
 - Exeljs - for export results to Excel
-- Pkg - for creating .exe file for using without IDE
+- Pkg - for creating .exe file for using app without IDE
 ($ pkg main.js -t node14-win-x64 --public -> command to create .exe for win64)
 
 Project development:
